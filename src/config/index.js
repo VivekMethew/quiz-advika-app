@@ -6,8 +6,8 @@ const ALLOW_ORIGINS = [
   "http://localhost:3000",
   "http://localhost:3001",
   "http://localhost:3002",
-  "https://play.eskoops.com",
-  "https://app.eskoops.com",
+  "https://quiz.advikainnovate.com",
+  "https://player.advikainnovate.com",
 ];
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
     POLL_DEFAULT_IMAGE: "66ae67aa1259b4835b55f1fb",
     QUIZ_DEFAULT_IMAGE: "66ae678c1259b4835b55f1f8",
   },
-  allowedOrigins: process.env?.ALLOW_ORIGINS?.split(",") || ALLOW_ORIGINS,
+  allowedOrigins: ALLOW_ORIGINS, //process.env?.ALLOW_ORIGINS?.split(",") || ALLOW_ORIGINS,
   KAFKA_GROUP: { GROUP_ID: "eskoops" },
   LOGIN_SESSION_SECRET:
     process.env.LOGIN_SESSION_SECRET || "qTWfh90nz2Cwb8EeW8zKN3KprO5pAhTd",
