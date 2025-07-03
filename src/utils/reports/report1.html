@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice</title>
+</head>
+
+<body>
+  <div style="
+        width: 95%;
+        margin: 0px auto;
+        padding: 10px 50px;
+        border: 1px solid #001e43;
+      ">
+    <div style="display: flex; justify-content: space-between">
+      <div style="width: 30%">
+        <img src="<%= logoImagePath %>" alt="Eskoops logo" />
+
+
+
+
+      </div>
+      <div>
+        <span style="
+              font-size: 30px;
+              font-weight: bold;
+              margin: 0px;
+              padding: 0px;
+              color: #02326e;
+            ">INVOICE</span>
+        <p style="font-size: 15px; columns: #001e43; font-weight: bold">
+          01 August 2023
+        </p>
+      </div>
+    </div>
+    <div style=" margin: 10px auto">
+      <div style="float:left">
+        <div style="
+              font-size: 20px;
+              font-weight: bold;
+              color: #001e43;
+              margin: 5px 0px;
+            ">
+          INVOICE TO
+        </div>
+        <div style="margin: 5px 0px">+91 6380451163</div>
+        <div style="margin: 5px 0px">jayasuryaj36@gmail.com</div>
+      </div>
+      <div style="
+            display: flex;
+            box-sizing: border-box;
+            background-color: #d8dfe8;
+            width: 350px;
+            justify-content: space-between;
+            float: right;
+          ">
+        <div style="
+              box-sizing: border-box;
+              width: 8px;
+              background-color: #f9a700;
+              margin-left: 5px;
+            "></div>
+        <div style="padding: 20px">
+          <div style="color: #001e43; font-size: 18px">Invoice Number</div>
+          <div style="padding-top: 5px; color: #73768c">Es/223/99303434</div>
+        </div>
+        <div style="padding: 20px">
+          <div style="color: #001e43; font-size: 18px">Date Information</div>
+          <div style="padding-top: 5px; color: #73768c">28/07/2023</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin: 30px 0px; width: 100%; clear: both; padding: 20px 0px;">
+      <table style="width: 100%; padding-top : 20px">
+        <thead style="background-color: #022a5e; color: #ffffff">
+          <tr>
+            <th style="padding: 8px">Sl No</th>
+            <th style="padding: 8px">Item Description</th>
+            <th style="padding: 8px">Price</th>
+            <th style="padding: 8px">Qty</th>
+            <th style="padding: 8px">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="
+                text-align: center;
+                background-color: #ebf0f6;
+                color: #022a5e;
+              ">
+            <td style="padding: 8px">1</td>
+            <td style="padding: 8px">
+              <%= planId?.subId?.name %>
+            </td>
+            <td style="padding: 8px">INR <%= amount %>
+            </td>
+            <td style="padding: 8px">01</td>
+            <td style="padding: 8px">Rs<%= amount %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin: 10px 0px">
+      <div style="float: left">
+        <div style="font-size: 23px; font-weight: bold; color: #001e43">
+          Payment Method
+        </div>
+        <div style="padding: 5px 0px">
+          <span style="
+                display: inline-block;
+                width: 120px;
+                color: #001e43;
+                font-size: 17px;
+                font-weight: bold;
+              ">Bank Account:</span>
+          <span style="color: #73768c">56002992928838</span>
+        </div>
+        <div style="padding: 5px 0px">
+          <span style="
+                display: inline-block;
+                width: 120px;
+                color: #001e43;
+                font-size: 17px;
+                font-weight: bold;
+              ">Bank Name:</span>
+          <span style="color: #73768c">Wells Fargo</span>
+        </div>
+        <div style="padding: 5px 0px">
+          <span style="
+                display: inline-block;
+                width: 120px;
+                color: #001e43;
+                font-size: 17px;
+                font-weight: bold;
+              ">Bank Code:</span>
+          <span style="color: #73768c">WF588604</span>
+        </div>
+      </div>
+      <div style="width: 350px; text-align: right; float: right">
+        <div style="padding: 5px 0px">
+          <span style="
+                display: inline-block;
+                width: 120px;
+                color: #001e43;
+                font-weight: bold;
+                font-size: 17px;
+              ">Sub Total:</span>
+          <span style="
+                display: inline-block;
+                width: 100px;
+                text-align: right;
+                font-weight: bold;
+                font-size: 17px;
+                color: #001e43;
+              ">Rs <%= amount %></span>
+        </div>
+        <div style="padding: 5px 0px">
+          <span style="
+                display: inline-block;
+                width: 120px;
+                color: #001e43;
+                font-weight: bold;
+                font-size: 17px;
+              ">Tax. Vat(0%):</span>
+          <span style="
+                display: inline-block;
+                width: 100px;
+                text-align: right;
+                font-weight: bold;
+                font-size: 17px;
+                color: #001e43;
+              ">Rs 00.00</span>
+        </div>
+        <div style="padding: 5px 0px">
+          <span style="
+                display: inline-block;
+                width: 120px;
+                color: #001e43;
+                font-weight: bold;
+                font-size: 17px;
+              ">Discount 0%:</span>
+          <span style="
+                display: inline-block;
+                width: 100px;
+                text-align: right;
+                font-weight: bold;
+                font-size: 17px;
+                color: #001e43;
+              ">Rs 00.00</span>
+        </div>
+        <div style="
+              padding: 5px 0px;
+              text-align: right;
+              background-color: #f9a700;
+              width: 250px;
+              margin-left: 105px;
+            ">
+          <span style="
+                display: inline-block;
+                width: 100px;
+
+                padding: 8px 0px;
+                font-size: 17px;
+                color: #001e43;
+                font-weight: bold;
+              ">Grant Total:</span>
+          <span style="
+                display: inline-block;
+                width: 100px;
+                text-align: right;
+                background-color: #f9a700;
+                padding: 8px 5px;
+                font-size: 17px;
+                color: #001e43;
+                font-weight: bold;
+              ">Rs <%= amount %></span>
+        </div>
+        <!-- Repeat for other price-related sections -->
+      </div>
+    </div>
+
+    <div style="margin-top: 60px; clear: both">
+      <div style="box-sizing: border-box; border: 1px solid #ccc; width: 200px"></div>
+      <div style="
+            margin: 10px 0px;
+            font-size: 20px;
+            color: #001e43;
+            font-weight: bold;
+          ">
+        Authorised Sign
+      </div>
+    </div>
+    <div style="margin: 20px 0px">
+      <div style="font-size: 20px; color: #001e43; font-weight: bold">
+        Terms and Conditions
+      </div>
+      <span style="
+            margin: 10px 0px;
+            display: inline-block;
+            font-size: 17px;
+            color: #001e43;
+          ">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+        eiusmod tempor in cidid unt labore et dolore magna.
+      </span>
+    </div>
+    <div style="
+          background-color: #001e43;
+          padding: 20px;
+          color: #ccc;
+          font-size: 16px;
+        ">
+      <div style="width: 30%; display: inline-flex;">
+        <img src="<%= phoneImagePath %>" alt="Eskoops logo" style="margin-right: 10px; width: 20px;height:20px" />
+        <span style="display: inline-block">9856662247</span>
+      </div>
+      <div style="width: 30%; display: inline-flex;">
+        <img src="<%= mailImagePath %>" style="margin-right: 10px; width: 20px;height:20px" />
+        <span style="display: inline-block">eskoops@gmail.com</span>
+      </div>
+      <div style="width: 30%; display: inline-block;">Thank you for the business!</div>
+    </div>
+  </div>
+
+
+  </div>
+  <!-- Place any JavaScript code here if needed -->
+</body>
+
+</html>

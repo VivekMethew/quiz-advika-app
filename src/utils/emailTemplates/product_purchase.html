@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap"
+        rel="stylesheet">
+    <title>New Product Purchased!</title>
+    <style>
+        title {
+            text-align: left;
+        }
+
+        body {
+            background-color: #fff;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .container {
+            background-color: #F7F7F7;
+            margin: 0 auto;
+            padding-top: 2px;
+            max-width: 600px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px #ccc;
+        }
+
+        h1 {
+            text-align: leftz;
+            color: #555;
+        }
+
+        p {
+            font-family: 'Nunito';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 25px;
+            /* or 125% */
+            color: #000000;
+
+        }
+
+        .support-link {
+            color: black;
+            text-decoration: none;
+        }
+
+        .support-link:hover {
+            text-decoration-style: dashed;
+        }
+
+        .verify_email {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button {
+            padding: 12px 32px;
+            gap: 6.2px;
+            background: linear-gradient(180deg, #FF9901 0%, #FF7A00 100%);
+            box-shadow: 0px 0.774822px 1.54964px rgba(16, 24, 40, 0.05);
+            border-radius: 6.19857px;
+            font-family: 'Nunito';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 25px;
+            color: #FFFFFF;
+            border: 0;
+            outline: none;
+            margin: 20px auto;
+            width: max-content;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: orange;
+        }
+
+        .contactinfor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .social-media {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .social-media a {
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .social-media img {
+            width: 32px;
+            height: 32px;
+            margin-right: 5px;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        .support_email_and_number div {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .support_email_and_number div:last-child {
+            margin-top: 5px;
+        }
+
+        .regards {
+            display: flex;
+            flex-direction: column;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 25px;
+            color: rgba(0, 0, 0, 0.6);
+            gap: 3px;
+        }
+
+        .product_detail {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 12px;
+            background: #FFFFFF;
+            box-shadow: 0px 4px 44px rgba(0, 0, 0, 0.04);
+            border-radius: 14px;
+            margin-bottom: 30px;
+        }
+
+        .product_detail .thumbnail {
+            width: 247.99px;
+            height: 139.41px;
+            border-radius: 12px;
+        }
+
+        .product_detail .product_info h2 {
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 37px;
+            letter-spacing: 0.02em;
+            color: rgba(0, 0, 0, 0.6);
+            margin: 0;
+            margin-bottom: 4px;
+        }
+
+        .product_detail .product_info h1 {
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 145%;
+            color: #343146;
+            margin: 14px 0px;
+
+        }
+
+        .product_created_info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .product_created_info .sold_by {
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 16px;
+            color: rgba(0, 0, 0, 0.6);
+
+        }
+
+        .product_created_info .created_by {
+            display: flex;
+            align-items: center;
+            padding: 1.63992px 4.91976px;
+            gap: 8.2px;
+            background: rgba(249, 167, 0, 0.09);
+            border-radius: 4.91976px;
+        }
+
+        .product_created_info .created_by span:first-child {
+            width: 15.6px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            color: white;
+            font-size: 7.79843px;
+            line-height: 11px;
+            height: 15.6px;
+            background: #F9A700;
+            border-radius: 50%;
+        }
+
+        .product_created_info .created_by span:last-child {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 20px;
+            color: #000000;
+        }
+
+        .product_created_info .download,
+        .product_created_info .rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .product_created_info .download span,
+        .product_created_info .rating span,
+        .product_info .quiz_info span {
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 19px;
+            color: #000000;
+        }
+
+        .product_info .quiz_info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header style="text-align: center; margin: 10px; border: radius 8px; background-color: white ;">
+            <img src="https://eskoops-prod-bucket.s3.ap-south-1.amazonaws.com/eskoops/eskoops__1727621971204_file.png"
+                alt="logo" width="150" height="50" style="object-fit: cover;" />
+        </header>
+        <section>
+            <h2>New Product Purchased!</h2>
+            <p>Dear Vivek Mathew,</p>
+            <p>Thanks for purchasing <b> Movie Trivia Quiz </b>. Enjoy sharing it with your players for a fun and
+                engaging
+                experience. Contact us for any feedback or questions. Thank you! </p>
+
+            <div class="product_detail">
+                <img class="thumbnail" src="https://cdn.pixabay.com/photo/2017/09/08/02/24/chess-2727443_1280.jpg" />
+                <div class="product_info">
+                    <h2>Movie Trivia Quiz</h2>
+                    <div class="quiz_info">
+                        <div>
+                            <!-- <img src="https://nyc3.digitaloceanspaces.com/eskooks.bucket/eskoops/eskoops__1683727440359.png"
+                                alt="list" style="margin-bottom: -2px;" /> -->
+                            <span>20 Question</span>
+                        </div>
+                        <div>
+                            <!-- <img src="https://nyc3.digitaloceanspaces.com/eskooks.bucket/eskoops/eskoops__1683727398563.png"
+                                alt="clock" style="margin-bottom: -2px;" /> -->
+                            <span>40 mins</span>
+                        </div>
+                    </div>
+                    <h1>₹4,700.00</h1>
+
+                    <div class="product_created_info">
+                        <span class="sold_by">Sold By</span>
+                        <div class="created_by">
+                            <span>E</span>
+                            <span>eSkoops</span>
+                        </div>
+                        <div class="download">
+                            <!-- <img src="https://nyc3.digitaloceanspaces.com/eskooks.bucket/eskoops/eskoops__1683727332301.png"
+                                alt="download" /> -->
+                            <span>200</span>
+                        </div>
+                        <div class="rating">
+                            <!-- <img src="https://nyc3.digitaloceanspaces.com/eskooks.bucket/eskoops/eskoops__1683727292076.png"
+                                alt="rating" /> -->
+
+                            <span>4.8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="regards">
+                <span>Best regards,</span>
+                <span>eSkoops Support Team</span>
+            </div>
+            <div class="verify_email">
+                <a href="https://eskoops-lrxv.vercel.app/">
+                    <button class="button">View Product</button>
+
+                </a>
+            </div>
+            <div class="contactinfor">
+                <div class="social-media">
+                    <a href="https://www.facebook.com" target="_blank">
+                        <img width="20" height="20"
+                            src="https://eskoops-prod-bucket.s3.ap-south-1.amazonaws.com/eskoops/eskoops__1727621233841_file.png"
+                            alt="facebook" />
+                    </a>
+
+                    <a href="https://www.instagram.com" class="icon-link">
+                        <img width="20" height="20"
+                            src="https://eskoops-prod-bucket.s3.ap-south-1.amazonaws.com/eskoops/eskoops__1727621267460_file.png"
+                            alt="instagram" />
+                    </a>
+                    <a href="https://www.linkedin.com" class="icon-link">
+                        <img width="20" height="20"
+                            src="https://eskoops-prod-bucket.s3.ap-south-1.amazonaws.com/eskoops/eskoops__1727621291887_file.png"
+                            alt="linkedin" />
+                    </a>
+
+                    <a href="https://www.whatsapp.com" class="icon-link">
+                        <img width="20" height="20"
+                            src="https://eskoops-prod-bucket.s3.ap-south-1.amazonaws.com/eskoops/eskoops__1727621312066_file.png"
+                            alt="whatsapp">
+                    </a>
+
+                </div>
+                <div class="support_email_and_number">
+                    <div>
+                       <img src="https://eskoops-prod-bucket.s3.ap-south-1.amazonaws.com/eskoops/eskoops__1727621404402_file.png"  width="18" height="18" alt="mail" />
+
+                        <a href="mailto:eskoops@thethoughtbulb.com.com" class="support-link">eskoops@thethoughtbulb.com.com</a>
+                    </div>
+                    <div>
+                    <img src="https://eskoops-prod-bucket.s3.ap-south-1.amazonaws.com/eskoops/eskoops__1727621513518_file.png"  width="18" height="18" alt="phone number" />
+                        <a href="tel:080-000-0000" class="support-link">080-000-0000</a>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </section>
+</body>
+
+</html>
