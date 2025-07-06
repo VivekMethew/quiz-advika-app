@@ -1,7 +1,7 @@
 const winstonLog = require("./winstonLog");
 const OpenAI = require("openai");
 const openai = new OpenAI({
-  apiKey: process.env.CHATGPT_ESKOOPS,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 /* original*/
@@ -47,11 +47,11 @@ const openai = new OpenAI({
 //   }
 // };
 
-exports.createQuestions = async (topic, noOfQues,currentQuestions = []) => {
+exports.createQuestions = async (topic, noOfQues, currentQuestions = []) => {
   try {
     const remainingQuestions = noOfQues - currentQuestions.length;
     if (remainingQuestions <= 0) {
-      return { status:true,questions:currentQuestions.slice(0, noOfQues) };
+      return { status: true, questions: currentQuestions.slice(0, noOfQues) };
     }
     const prompt = `Generate ${remainingQuestions} questions about "${topic}" with
     options and correct answers.
@@ -71,57 +71,61 @@ exports.createQuestions = async (topic, noOfQues,currentQuestions = []) => {
         { role: "user", content: prompt },
       ],
       model: process.env.GPT_MODEL,
-      response_format: { type: "json_object" }
+      response_format: { type: "json_object" },
     });
     const originalData = chatCompletion.choices[0].message.content;
     winstonLog.info(chatCompletion.choices[0].message.content);
-    
+
     const responseData = JSON.parse(originalData);
-    
-  
+
     let validateData = validateQuizJson(responseData);
     if (validateData) {
-      
       var allQuestions = currentQuestions.concat(responseData.questions);
       return exports.createQuestions(topic, noOfQues, allQuestions);
+    } else {
+      return { status: false, error: "Validation error" };
     }
-    else {
-      return { status:false,error:'Validation error'};
-    }
-   
   } catch (error) {
     console.error("Error generating MCQs:", error);
-    return { status:false,error:'Unexpected end of JSON input'};
+    return { status: false, error: "Unexpected end of JSON input" };
   }
 };
 
 function validateQuizJson(data) {
   try {
-     
-      if (!data.questions || !Array.isArray(data.questions) || data.questions.length === 0) {
-          return false;
-      }
-      for (const question of data.questions) {
-          
-          if (typeof question.title !== 'string' || question.title.trim() === '') {
-              return false;
-          }
-          
-          if (!Array.isArray(question.options) ||
-              question.options.length === 0 ||
-              !question.options.every(option => typeof option === 'string' && option.trim() !== '')) {
-              return false;
-          }
-          
-          if (!Array.isArray(question.answers) ||
-              question.answers.length === 0 ||
-              !question.answers.every(answer => typeof answer === 'number')) {
-              return false;
-          }
-      }
-      return true;
-  } catch (e) {
+    if (
+      !data.questions ||
+      !Array.isArray(data.questions) ||
+      data.questions.length === 0
+    ) {
       return false;
+    }
+    for (const question of data.questions) {
+      if (typeof question.title !== "string" || question.title.trim() === "") {
+        return false;
+      }
+
+      if (
+        !Array.isArray(question.options) ||
+        question.options.length === 0 ||
+        !question.options.every(
+          (option) => typeof option === "string" && option.trim() !== ""
+        )
+      ) {
+        return false;
+      }
+
+      if (
+        !Array.isArray(question.answers) ||
+        question.answers.length === 0 ||
+        !question.answers.every((answer) => typeof answer === "number")
+      ) {
+        return false;
+      }
+    }
+    return true;
+  } catch (e) {
+    return false;
   }
 }
 // Create Poll
@@ -129,7 +133,7 @@ exports.createPoll = async (topic, noOfQues, currentQuestions = []) => {
   try {
     const remainingQuestions = noOfQues - currentQuestions.length;
     if (remainingQuestions <= 0) {
-      return { status:true,questions:currentQuestions.slice(0, noOfQues) };
+      return { status: true, questions: currentQuestions.slice(0, noOfQues) };
     }
     const prompt = `Generate ${remainingQuestions} questions about "${topic}" with
     options.
@@ -148,52 +152,52 @@ exports.createPoll = async (topic, noOfQues, currentQuestions = []) => {
         { role: "user", content: prompt },
       ],
       model: process.env.GPT_MODEL,
-      response_format: { type: "json_object" }
+      response_format: { type: "json_object" },
     });
     const originalData = chatCompletion.choices[0].message.content;
     winstonLog.info(originalData);
-    
+
     const responseData = JSON.parse(originalData);
-    
-  
+
     let validateData = validatePollJson(responseData);
     if (validateData) {
-      
       var allQuestions = currentQuestions.concat(responseData.questions);
       return exports.createQuestions(topic, noOfQues, allQuestions);
+    } else {
+      return { status: false, error: "Validation error" };
     }
-    else {
-      return { status:false,error:"Validation error"};
-    }
-   
   } catch (error) {
     //console.error("Error generating MCQs:", error);
-    return { status:false,error:'Unexpected end of JSON input'};
+    return { status: false, error: "Unexpected end of JSON input" };
   }
 };
 function validatePollJson(data) {
   try {
-     
-      if (!data.questions || !Array.isArray(data.questions) || data.questions.length === 0) {
-          return false;
-      }
-      for (const question of data.questions) {
-          
-          if (typeof question.title !== 'string' || question.title.trim() === '') {
-              return false;
-          }
-          
-          if (!Array.isArray(question.options) ||
-              question.options.length === 0 ||
-              !question.options.every(option => typeof option === 'string' && option.trim() !== '')) {
-              return false;
-          }
-          
-          
-      }
-      return true;
-  } catch (e) {
+    if (
+      !data.questions ||
+      !Array.isArray(data.questions) ||
+      data.questions.length === 0
+    ) {
       return false;
+    }
+    for (const question of data.questions) {
+      if (typeof question.title !== "string" || question.title.trim() === "") {
+        return false;
+      }
+
+      if (
+        !Array.isArray(question.options) ||
+        question.options.length === 0 ||
+        !question.options.every(
+          (option) => typeof option === "string" && option.trim() !== ""
+        )
+      ) {
+        return false;
+      }
+    }
+    return true;
+  } catch (e) {
+    return false;
   }
 }
 exports.createFormatQuestionResp = (response) => {

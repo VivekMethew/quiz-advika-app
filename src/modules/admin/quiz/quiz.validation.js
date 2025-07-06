@@ -53,6 +53,11 @@ const quizAndPollSchema = {
       questions: Joi.array().required(),
     }),
   },
+  bulkUpload: {
+    body: Joi.object().keys({
+      questions: Joi.array().required(),
+    }),
+  },
 
   ratings: {
     body: Joi.object().keys({

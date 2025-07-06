@@ -1,7 +1,9 @@
+const { HTTP_CODES, MESSAGES } = require("../../../config");
 const { responseHelper } = require("../../../helpers");
 const { generateStartTimeEnd } = require("../../../utils/dateUtils");
 const { generateQuizPollUniqCode } = require("../../../utils/generate.utils");
 const quizPollService = require("./quiz.service");
+const path = require("path");
 
 async function getPayload(body) {
   body.code = await generateQuizPollUniqCode();
@@ -48,6 +50,52 @@ exports.addQuizPoll = async (req, res, next) => {
       response.message,
       response.data
     );
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.bulkUpload = async (req, res, next) => {
+  try {
+    const { file, user } = req;
+    console.log({ file });
+    const response = await quizPollService.bulkUpload(user, file);
+    if (!response.success) {
+      return responseHelper.errorResponse(
+        res,
+        response.code,
+        response.message,
+        response.data
+      );
+    }
+    return responseHelper.successResponse(
+      res,
+      response.code,
+      response.message,
+      response.data
+    );
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.downloadSample = async (req, res, next) => {
+  try {
+    const filePath = path.join(
+      __dirname,
+      "../../../public/upload/sample_format.xlsx"
+    );
+
+    res.download(filePath, "sample_format.xlsx", (err) => {
+      if (err) {
+        return responseHelper.errorResponse(
+          res,
+          HTTP_CODES.BAD_REQUEST,
+          MESSAGES.BAD_REQUEST,
+          err
+        );
+      }
+    });
   } catch (error) {
     next(error);
   }

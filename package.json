@@ -79,6 +79,7 @@
     "swagger-ui-express": "^5.0.1",
     "winston": "^3.13.1",
     "winston-loki": "^6.1.2",
+    "xlsx": "^0.18.5",
     "yaml": "^2.5.0"
   },
   "devDependencies": {

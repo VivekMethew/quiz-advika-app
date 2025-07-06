@@ -16,7 +16,7 @@ module.exports = {
   HTTP_CODES: httpCodes,
   DEFAULT_IMAGE: {
     POLL_DEFAULT_IMAGE: "66ae67aa1259b4835b55f1fb",
-    QUIZ_DEFAULT_IMAGE: "66ae678c1259b4835b55f1f8",
+    QUIZ_DEFAULT_IMAGE: process.env.QUIZ_DEFAULT_IMAGE,
   },
   allowedOrigins: ALLOW_ORIGINS, //process.env?.ALLOW_ORIGINS?.split(",") || ALLOW_ORIGINS,
   KAFKA_GROUP: { GROUP_ID: "eskoops" },

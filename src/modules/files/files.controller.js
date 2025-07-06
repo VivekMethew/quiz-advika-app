@@ -41,6 +41,7 @@ exports.uploadBucket = async (req, res, next) => {
 exports.uploadBucketNew = async (req, res, next) => {
   try {
     const { file, user } = req;
+    console.log(file);
     const response = await filesService.uploadBucketNew(user, file);
     if (!response.success) {
       return responseHelper.errorResponse(

@@ -6,6 +6,7 @@ const { validateAccessToken } = require("../../../middlewares/authorisation");
 const { validationMiddleware } = require("../../../middlewares");
 const { quizAndPollSchema } = require("./quiz.validation");
 const { questionRoutes } = require("../questions");
+const { uploadBuilkUpload } = require("../../../middlewares/bulk.files");
 
 const router = express.Router();
 
@@ -15,6 +16,15 @@ router.post(
   validationMiddleware(quizAndPollSchema.createQuilPoll),
   quizPollController.addQuizPoll
 );
+
+router.post(
+  "/upload/bulk",
+  validateAccessToken(CONSTANTS.USER.ROLES.ADMIN),
+  uploadBuilkUpload.single("bulkFile"),
+  quizPollController.bulkUpload
+);
+
+router.get("/download/sample", quizPollController.downloadSample);
 
 router.get(
   "/list",

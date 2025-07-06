@@ -12,6 +12,9 @@ const { FileModel } = require("../../../models/files.model");
 const { User } = require("../../../models/users.model");
 const { Category } = require("../../../models/category.model");
 const { DEFAULT_IMAGE } = require("../../../config");
+const { parseQuizExcel } = require("../../../utils/parseExcel");
+const mongoose = require("mongoose");
+const { generateQuizPollUniqCode } = require("../../../utils/generate.utils");
 
 exports.addQuizPoll = async (payload) => {
   payload.isDated = new Date();
@@ -40,16 +43,6 @@ exports.addQuizPoll = async (payload) => {
   ) {
     payload.isWallOfFame = true;
   }
-
-  // const isQuestions = await isQuestionsUsed(payload.questions);
-
-  // if (isQuestions) {
-  //   return serviceResponse(
-  //     false,
-  //     HTTP_CODES.BAD_REQUEST,
-  //     MESSAGES.QUISTIONS_USED
-  //   );
-  // }
 
   payload.qrCodeLink = result.url;
   payload.status = "active";
@@ -81,6 +74,76 @@ exports.addQuizPoll = async (payload) => {
   }
 
   return serviceResponse(true, HTTP_CODES.CREATED, MESSAGES.CREATED, response);
+};
+
+const prepareQuizPayload = async () => {
+  let payload = {};
+  payload.code = await generateQuizPollUniqCode();
+  payload.duration = 24;
+  const { startISO, endISO, timezon } = generateStartTimeEnd(
+    new Date(),
+    payload.duration
+  );
+  payload.startDateTime = startISO;
+  payload.endDateTime = endISO;
+  payload.timezon = timezon;
+  payload.isDated = new Date();
+
+  const result = await qrCodeGenreate(payload.code);
+
+  fs.unlink(result.filePath, (err) => {
+    if (err) logger.error(err);
+    logger.info("file has been deleted");
+  });
+
+  fs.unlink(result.outputPath, (err) => {
+    if (err) logger.error(err);
+    logger.info("file has been deleted");
+  });
+  payload.qrCodeLink = result.url;
+  payload.status = "active";
+  payload.ratings = parseFloat((Math.random() * (5 - 3.5) + 3.5).toFixed(2));
+
+  payload.coverImage = DEFAULT_IMAGE.QUIZ_DEFAULT_IMAGE;
+  return payload;
+};
+
+exports.bulkUpload = async (user, file) => {
+  try {
+    const quizzesWithQuestions = parseQuizExcel(file.path);
+    const quizArray = [];
+
+    for (let quiz of quizzesWithQuestions) {
+      const quizQuestions = quiz.questions.map((question) => ({
+        ...question,
+        userId: user.id,
+        isUsed: true,
+      }));
+
+      const questions = await QuestionModel.insertMany(quizQuestions);
+
+      const preparePayload = await prepareQuizPayload();
+      preparePayload.userId = user.id;
+      preparePayload.title = quiz.title;
+      preparePayload.type = quiz.type;
+      preparePayload.description = quiz.description;
+      preparePayload.duration = preparePayload.duration;
+      preparePayload.questions = questions.map((ques) => ques._id);
+      quizArray.push(preparePayload);
+    }
+
+    const quizDocs = await quizPollModel.insertMany(quizArray);
+
+    console.log("✅ Quiz and questions imported successfully!");
+    fs.unlink(file.path, (err) => {
+      if (err) logger.error(err);
+      logger.info("file has been deleted");
+    });
+
+    return serviceResponse(true, HTTP_CODES.OK, MESSAGES.CREATED, quizDocs);
+  } catch (err) {
+    return serviceResponse(false, HTTP_CODES.BAD_REQUEST, err.message);
+  }
 };
 
 exports.getList = async (userId, query) => {
@@ -630,10 +693,12 @@ exports.bulkQuizPollActivated = async (payload) => {
       _id: payload.ids[i],
       isDeleted: null,
     });
+
     const { startISO, endISO, timezon } = generateStartTimeEnd(
       new Date(),
       response.duration
     );
+
     await quizPollModel.findOneAndUpdate(
       {
         _id: payload.ids[i],
